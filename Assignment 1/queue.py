@@ -19,11 +19,12 @@ class Queue:
         new_node = Node(data)
         # Makes sure this also counts as front if queue is empty before adding this node 
         if self.is_empty(): 
-            self.front = new_node
-        # This part makes the new node point to what the current rear is
-        new_node.next = self.rear
-        # Changes the rear to the new node now
-        self.rear = new_node
+            self.front = self.rear = new_node
+        else: 
+            # This part makes the current rear point to the new rear 
+            self.rear.next = new_node
+            # Changes the rear to the new node now
+            self.rear = new_node
 
     # dequeue method 
     def dequeue(self):
@@ -37,8 +38,42 @@ class Queue:
             return current_node.data
 
     # peek method 
+    def peek(self):
+        if self.is_empty():
+            return "Queue is empty"
+        else: 
+            # Saves current node before we update front node
+            return self.front.data
+        
+    # size method 
+    def size(self): 
+        if self.is_empty(): 
+            return "Queue is empty"
+        else: 
+            # Create counter
+            size = 0 
+            current_node = self.front
+            while current_node is not None: 
+                #print("Adding to counter")
+                size += 1
+                current_node = current_node.next
+            return size
 
     # __repr__ dunder method
+    def __repr__(self):
+        if self.is_empty():
+            return "Queue is empty"
+        else: 
+            print(f"Queue size: {self.size()}")
+            current_node = self.front
+            # I kept this outside of the while loop so I 
+            # could add the 'top' designation in the printout
+            print(f"{current_node.data} - front")
+            current_node = current_node.next
+            while current_node is not None: 
+                print(current_node.data)
+                current_node = current_node.next
+            return
 
 # Example 
 
@@ -51,6 +86,17 @@ def main():
     queue.enqueue(1)
     print(queue.dequeue()) # 1
     print(queue.dequeue()) # Cannot complete operation - queue is empty
+
+    queue.enqueue(1)
+    print(queue.peek()) # 1 
+
+    queue.enqueue(2)
+    queue.enqueue(3)
+    print(queue.size()) # 2
+    queue.enqueue(4)
+    queue.enqueue(5)
+
+    print(queue.__repr__())
 
 main()
 

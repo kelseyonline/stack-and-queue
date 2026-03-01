@@ -94,6 +94,6 @@ def main():
 
     print(stack.size()) # 3 
 
-    stack.__repr__() # This will show a printout of the stack
+    print(stack) # This will show a printout of the stack using __repr__
 
 main()
